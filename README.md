@@ -6,4 +6,6 @@ Learning CRUD using Java and MySQL.
 
 ### Prerequisites
 - Get a database (Oracle SQL, MySQL)
-    - I used MySQL (WorkBench) and initialize by Connection/DB
+    - I used MySQL (WorkBench) and created a Connection/DB
+    - In the database, a table called Users is created with the following attributes
+        - UserID (int), Username (varchar), Password (varchar), FullName (varchar), Email (varchar)
