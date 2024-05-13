@@ -20,7 +20,7 @@ public class Create_DB {
 
     public void addUsers(BufferedReader br) {
         // Holds all the parameters for the SQL statement
-        List<String> userInfo = new ArrayList<>();
+        // List<String> userInfo = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(dbURL, username, password)) {
             String line;
@@ -37,8 +37,16 @@ public class Create_DB {
                 String email = temp[10];
 
                 //Create SQL statement
-                //Execute SQL statement
+                String createUser = "INSERT INTO Users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
+                PreparedStatement insertUser = con.prepareStatement(createUser);
 
+                //Execute SQL statement
+                insertUser.setString(1, username);
+                insertUser.setString(2, password);
+                insertUser.setString(3, fullname);
+                insertUser.setString(4, email);
+
+                insertUser.executeUpdate();
             }
         } catch (IOException ioe) {
             System.out.println("Oop something went wrong and I have no clue (file input error)");
