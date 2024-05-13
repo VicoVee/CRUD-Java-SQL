@@ -10,6 +10,7 @@ public class Create_DB {
     static String dbURL = "jdbc:mysql://localhost:3306/sampledb"; //Get Connection Address
     static String username = "root"; //Get the user
     static String password = "916192991"; //Get the password
+    static String[] arr = {"MarioBros", "nintendo64", "Mario Luigi", "nintendo@gmail.com"};
 
     public static void main(String[] args) {
         //Create a Connection object. This will allow us to connect to the DB
@@ -21,18 +22,35 @@ public class Create_DB {
             //is already auto_incremented? Will check on this later
             String userBob = "INSERT INTO Users (username, password, fullname, email) VALUES(?, ?, ?, ?)";
 
+            //Insert each parameter manually using prepareStatement
             PreparedStatement insertBob = conn.prepareStatement(userBob);
+            //Since each parameter is a varchar/string, use the setString method
             insertBob.setString(1, "BobLovesMe");
             insertBob.setString(2, "password134");
             insertBob.setString(3, "Bob Larry");
             insertBob.setString(4, "lovemenots@yahoo.com");
 
+            //executeUpdate() runs the SQL command and sends to database
+            //Returns the number of rows returned or 0 if nothing is returned
             int rowInserted = insertBob.executeUpdate();
             if(rowInserted > 0){
                 System.out.println("A user has been inserted");
             }
+
+            //Testing something else
+            String userMarie = "INSERT INTO Users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
+
+            PreparedStatement insertMarie = conn.prepareStatement(userMarie);
+
+            for(int i = 0; i < arr.length; i++){
+                insertMarie.setString(i+1, arr[i]);
+            }
+            rowInserted = insertMarie.executeUpdate();
+            if(rowInserted > 0){
+                System.out.println("Marie has been added as a user!");
+            }
             else {
-                System.out.println("No one has been recently inserted");
+                System.out.println("Insertion Failed");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
