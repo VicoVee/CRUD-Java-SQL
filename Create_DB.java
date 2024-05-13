@@ -1,5 +1,6 @@
 import java.sql.Connection; //An object that holds the Connection to DB
 import java.sql.DriverManager; //Connects Java to MySQL
+import java.sql.PreparedStatement;
 import java.sql.SQLException; //Catch Errors
 import java.sql.Statement; //create statements with ease
 
@@ -17,8 +18,22 @@ public class Create_DB {
             //First, write the insert statement in SQL
             //Then convert to String and place in a Java String Object
             //Note: Need to define the parameters (username, pass, etc) because the primary key
-            //is already auto_incremented
+            //is already auto_incremented? Will check on this later
             String userBob = "INSERT INTO Users (username, password, fullname, email) VALUES(?, ?, ?, ?)";
+
+            PreparedStatement insertBob = conn.prepareStatement(userBob);
+            insertBob.setString(1, "BobLovesMe");
+            insertBob.setString(2, "password134");
+            insertBob.setString(3, "Bob Larry");
+            insertBob.setString(4, "lovemenots@yahoo.com");
+
+            int rowInserted = insertBob.executeUpdate();
+            if(rowInserted > 0){
+                System.out.println("A user has been inserted");
+            }
+            else {
+                System.out.println("No one has been recently inserted");
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
