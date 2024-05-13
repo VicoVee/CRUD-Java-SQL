@@ -11,18 +11,13 @@ import java.util.ArrayList;
 
 //Creating an Insert Statement in Java
 public class Create_DB {
-    static String dbURL = "jdbc:mysql://localhost:3306/sampledb"; // Get Connection Address
-    static String username = "root"; // Get the user
-    static String password = "916192991"; // Get the password
-    // static String[] arr = {"MarioBros", "nintendo64", "Mario Luigi",
-    // "nintendo@gmail.com"};
     private final String COMMA_DELIMITER = ","; // Identify the columns in the CSV
 
-    public void addUsers(BufferedReader br) {
+    public void addUsers(Connection con, BufferedReader br) {
         // Holds all the parameters for the SQL statement
         // List<String> userInfo = new ArrayList<>();
 
-        try (Connection con = DriverManager.getConnection(dbURL, username, password)) {
+        try {
             String line;
             br.readLine(); // Skips the column names
 
@@ -31,8 +26,9 @@ public class Create_DB {
                 // Split lines to appropiate columns and save each column as a String array
                 String[] temp = line.split(COMMA_DELIMITER);
 
-                //Removing the double quotes (") from each column O(1) and reinserting into String array
-                for(int i = 0; i < temp.length; i++){
+                // Removing the double quotes (") from each column O(1) and reinserting into
+                // String array
+                for (int i = 0; i < temp.length; i++) {
                     temp[i] = temp[i].replaceAll("\"", "");
                 }
 
@@ -48,17 +44,17 @@ public class Create_DB {
                 String fullname = temp[0] + " " + temp[1];
                 String email = temp[10];
 
-                //Create SQL statement
+                // Create SQL statement
                 String createUser = "INSERT INTO Users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
                 PreparedStatement insertUser = con.prepareStatement(createUser);
 
-                //Create SQL statement
+                // Create SQL statement
                 insertUser.setString(1, username);
                 insertUser.setString(2, password);
                 insertUser.setString(3, fullname);
                 insertUser.setString(4, email);
 
-                //Execute SQL statement
+                // Execute SQL statement
                 insertUser.executeUpdate();
             }
         } catch (IOException ioe) {
@@ -66,16 +62,19 @@ public class Create_DB {
             ioe.printStackTrace();
             System.exit(1);
         } catch (SQLException sqlE) {
+            System.out.println("Oh no, something wrong with the SQL");
             sqlE.printStackTrace();
         }
-
     }
 
+    // Next create a method to print out all Users
+    // Select Statements in SQL next
+    // System.out.println(String.format("%s %s %s %s", username, password, fullname,
+    // email));
+    public void viewAllUsers(Connection con) throws SQLException {
+        Statement viewUsers = con.createStatement();
 
-    //Next create a method to print out all Users
-    //Select Statements in SQL next
-    //System.out.println(String.format("%s %s %s %s", username, password, fullname, email));
-
+    }
 
     // public static void main(String[] args) {
     // //Create a Connection object. This will allow us to connect to the DB
