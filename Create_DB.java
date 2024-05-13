@@ -43,8 +43,8 @@ public class Create_DB {
                  * Fullname: First + Last Name
                  * Email: The email
                  */
-                String username = temp[0] + temp[2].substring(0, 2);
-                String password = temp[2].substring(0, 2) + temp[7];
+                String username = temp[0] + temp[1].substring(0, 2);
+                String password = temp[1].substring(0, 2) + temp[7];
                 String fullname = temp[0] + " " + temp[1];
                 String email = temp[10];
 
