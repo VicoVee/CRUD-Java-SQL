@@ -16,45 +16,43 @@ public class Create_DB {
     static String password = "916192991"; // Get the password
     // static String[] arr = {"MarioBros", "nintendo64", "Mario Luigi",
     // "nintendo@gmail.com"};
-    private final String COMMA_DELIMITER = ","; //Identify the columns in the CSV
+    private final String COMMA_DELIMITER = ","; // Identify the columns in the CSV
 
     public void addUsers(BufferedReader br) {
-        //Holds all the parameters for the SQL statement
+        // Holds all the parameters for the SQL statement
         List<String> userInfo = new ArrayList<>();
 
-        try {
+        try (Connection con = DriverManager.getConnection(dbURL, username, password)) {
             String line;
-            br.readLine(); //Skips the column names 
+            br.readLine(); // Skips the column names
 
-            //While the line is NOT NULL, read given columns to add to parameters
+            // While the line is NOT NULL, read given columns to add to parameters
             while ((line = br.readLine()) != null) {
-                //Split lines to appropiate columns
+                // Split lines to appropiate columns
                 String[] temp = line.split(COMMA_DELIMITER);
-                
-                for(String i : temp) {
-                    System.out.println(i);
-                }
+
+                String username = temp[0] + temp[2].substring(0, 2);
+                String password = temp[2].substring(0, 2) + temp[7];
+                String fullname = temp[0] + " " + temp[1];
+                String email = temp[10];
+
+                //Create SQL statement
+                //Execute SQL statement
+
             }
         } catch (IOException ioe) {
             System.out.println("Oop something went wrong and I have no clue (file input error)");
             ioe.printStackTrace();
             System.exit(1);
+        } catch (SQLException sqlE) {
+            sqlE.printStackTrace();
         }
 
     }
-   
 
 
-
-
-
-
-
-
-
-
-
-
+    //Next create a method to print out all Users
+    //Select Statements in SQL next
 
     // public static void main(String[] args) {
     // //Create a Connection object. This will allow us to connect to the DB
