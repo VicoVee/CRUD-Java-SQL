@@ -28,9 +28,21 @@ public class Create_DB {
 
             // While the line is NOT NULL, read given columns to add to parameters
             while ((line = br.readLine()) != null) {
-                // Split lines to appropiate columns
+                // Split lines to appropiate columns and save each column as a String array
                 String[] temp = line.split(COMMA_DELIMITER);
 
+                //Removing the double quotes (") from each column O(1) and reinserting into String array
+                for(int i = 0; i < temp.length; i++){
+                    temp[i] = temp[i].replaceAll("\"", "");
+                }
+
+                /**
+                 * ~User Creation~
+                 * Username: Firstname + First Initial
+                 * Password: First 3 char of last name + Zip Code
+                 * Fullname: First + Last Name
+                 * Email: The email
+                 */
                 String username = temp[0] + temp[2].substring(0, 2);
                 String password = temp[2].substring(0, 2) + temp[7];
                 String fullname = temp[0] + " " + temp[1];
@@ -40,12 +52,13 @@ public class Create_DB {
                 String createUser = "INSERT INTO Users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
                 PreparedStatement insertUser = con.prepareStatement(createUser);
 
-                //Execute SQL statement
+                //Create SQL statement
                 insertUser.setString(1, username);
                 insertUser.setString(2, password);
                 insertUser.setString(3, fullname);
                 insertUser.setString(4, email);
 
+                //Execute SQL statement
                 insertUser.executeUpdate();
             }
         } catch (IOException ioe) {
@@ -61,6 +74,8 @@ public class Create_DB {
 
     //Next create a method to print out all Users
     //Select Statements in SQL next
+    //System.out.println(String.format("%s %s %s %s", username, password, fullname, email));
+
 
     // public static void main(String[] args) {
     // //Create a Connection object. This will allow us to connect to the DB
