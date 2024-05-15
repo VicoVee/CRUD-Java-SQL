@@ -8,9 +8,8 @@ import java.io.IOException;
 
 //Creating an Insert Statement in Java
 public class Create_DB {
-    private final String COMMA_DELIMITER = ","; // Identify the columns in the CSV
-
     public void addUsers(Connection con, BufferedReader br) {
+        String COMMA_DELIMITER = ","; // Identify the columns in the CSV
         try {
             // String resetDatabase = "ALTER TABLE Users AUTO_INCREMENT = 1";
             // PreparedStatement statement = con.prepareStatement(resetDatabase);
@@ -89,56 +88,4 @@ public class Create_DB {
 
     // Delete Statements in SQL
     // A method that deletes all users in the database
-
-    // TUTORIAL Code 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // public static void main(String[] args) {
-    // //Create a Connection object. This will allow us to connect to the DB
-    // //After everything under the try is completed, the connection will
-    // automatically close
-    // try (Connection conn = DriverManager.getConnection(dbURL, username,
-    // password)) {
-    // //First, write the insert statement in SQL
-    // //Then convert to String and place in a Java String Object
-    // //Note: Need to define the parameters (username, pass, etc) because the
-    // primary key
-    // //is already auto_incremented? Will check on this later
-    // String userBob = "INSERT INTO Users (username, password, fullname, email)
-    // VALUES(?, ?, ?, ?)";
-
-    // //Insert each parameter manually using prepareStatement
-    // PreparedStatement insertBob = conn.prepareStatement(userBob);
-    // //Since each parameter is a varchar/string, use the setString method
-    // insertBob.setString(1, "BobLovesMe");
-    // insertBob.setString(2, "password134");
-    // insertBob.setString(3, "Bob Larry");
-    // insertBob.setString(4, "lovemenots@yahoo.com");
-
-    // //executeUpdate() runs the SQL command and sends to database
-    // //Returns the number of rows returned or 0 if nothing is returned
-    // int rowInserted = insertBob.executeUpdate();
-    // if(rowInserted > 0){
-    // System.out.println("A user has been inserted");
-    // }
-
-    // //Testing Lists/For Loops with setString method
-    // String userMarie = "INSERT INTO Users (username, password, fullname, email)
-    // VALUES (?, ?, ?, ?)";
-
-    // PreparedStatement insertMarie = conn.prepareStatement(userMarie);
-
-    // for(int i = 0; i < arr.length; i++){
-    // insertMarie.setString(i+1, arr[i]);
-    // }
-    // rowInserted = insertMarie.executeUpdate();
-    // if(rowInserted > 0){
-    // System.out.println("Marie has been added as a user!");
-    // }
-    // else {
-    // System.out.println("Insertion Failed");
-    // }
-    // } catch (SQLException ex) {
-    // ex.printStackTrace();
-    // }
-    // }
 }
