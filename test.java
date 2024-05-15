@@ -7,22 +7,24 @@ import java.sql.DriverManager; //Connects SQL connection and Java
 import java.sql.SQLException; //Catches SQL Errors
 
 public class test {
+    //Connecting to the database
     static String dbURL = "jdbc:mysql://localhost:3306/sampledb"; // Get Connection Address
     static String username = "root"; // Get the user
     static String password = "916192991"; // Get the password
 
-    public static void main(String[] args) throws FileNotFoundException {
+    //Run the statements
+    public static void main(String[] args) throws FileNotFoundException, IOException, SQLException {
         FileReader file = new FileReader("us-500.csv");
         BufferedReader br = new BufferedReader(file);
 
-        try (Connection con = DriverManager.getConnection(dbURL, username, password)) {
-            Create_DB test = new Create_DB();
-           //test.addUsers(con, br);
-           //test.viewAllUsers(con);
-           test.countAllUsers(con);
+        Connection con = DriverManager.getConnection(dbURL, username, password)
+        Create_DB test = new Create_DB();
+        //test.addUsers(con, br);
+        //test.viewAllUsers(con);
+        test.countAllUsers(con);
 
-        } catch (SQLException sqlE) {
-            sqlE.printStackTrace();
-        }
+        //Close buffered reader and connection
+        con.close();
+        br.close();
     }
 }
