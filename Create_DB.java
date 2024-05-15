@@ -11,10 +11,11 @@ public class Create_DB {
     private final String COMMA_DELIMITER = ","; // Identify the columns in the CSV
 
     public void addUsers(Connection con, BufferedReader br) {
-        // Holds all the parameters for the SQL statement
-        // List<String> userInfo = new ArrayList<>();
-
         try {
+            // String resetDatabase = "ALTER TABLE Users AUTO_INCREMENT = 1";
+            // PreparedStatement statement = con.prepareStatement(resetDatabase);
+            // statement.executeUpdate();
+
             String line;
             br.readLine(); // Skips the column names
 
@@ -76,6 +77,18 @@ public class Create_DB {
         }
 
     }
+
+    public void countAllUsers(Connection con) throws SQLException {
+        String viewUsers = "SELECT COUNT(fullname) FROM Users";
+        Statement statement = con.createStatement();
+        ResultSet result = statement.executeQuery(viewUsers);
+
+        result.next();
+        System.out.println("There are " + result.getInt(1) + " users in the database");
+    }
+
+    // Delete Statements in SQL
+    // A method that deletes all users in the database
 
     // TUTORIAL Code 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

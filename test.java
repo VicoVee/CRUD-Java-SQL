@@ -18,7 +18,8 @@ public class test {
         try (Connection con = DriverManager.getConnection(dbURL, username, password)) {
             Create_DB test = new Create_DB();
            //test.addUsers(con, br);
-           test.viewAllUsers(con);
+           //test.viewAllUsers(con);
+           test.countAllUsers(con);
 
         } catch (SQLException sqlE) {
             sqlE.printStackTrace();
