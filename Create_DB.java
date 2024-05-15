@@ -1,13 +1,10 @@
 import java.sql.Connection; //An object that holds the Connection to DB
-import java.sql.DriverManager; //Connects Java to MySQL
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException; //Catch Errors
 import java.sql.Statement; //create statements with ease
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 
 //Creating an Insert Statement in Java
 public class Create_DB {
@@ -67,15 +64,21 @@ public class Create_DB {
         }
     }
 
-    // Next create a method to print out all Users
-    // Select Statements in SQL next
-    // System.out.println(String.format("%s %s %s %s", username, password, fullname,
-    // email));
+    // Select Statements in SQL
+    // A method to print out all Users first by fullname, then by username
     public void viewAllUsers(Connection con) throws SQLException {
-        Statement viewUsers = con.createStatement();
+        String viewUsers = "SELECT fullname, username FROM Users";
+        Statement statement = con.createStatement();
+        ResultSet result = statement.executeQuery(viewUsers);
+
+        while (result.next()){
+            System.out.println(result.getString(1) + " has been added as user: " + result.getString(2)); 
+        }
 
     }
 
+    // TUTORIAL Code 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // public static void main(String[] args) {
     // //Create a Connection object. This will allow us to connect to the DB
     // //After everything under the try is completed, the connection will
@@ -105,7 +108,7 @@ public class Create_DB {
     // System.out.println("A user has been inserted");
     // }
 
-    // //Testing something else
+    // //Testing Lists/For Loops with setString method
     // String userMarie = "INSERT INTO Users (username, password, fullname, email)
     // VALUES (?, ?, ?, ?)";
 
