@@ -19,11 +19,9 @@ public class test {
 
         Connection con = DriverManager.getConnection(dbURL, username, password);
         Create_DB test = new Create_DB();
-        //test.addUsers(con, br);
+        test.addUsers(con, br);
         //test.viewAllUsers(con);
-        test.countAllUsers(con);
         test.deleteAllUsers(con);
-        test.countAllUsers(con);
 
         //Close buffered reader and connection
         con.close();

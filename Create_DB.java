@@ -12,7 +12,12 @@ public class Create_DB {
         String COMMA_DELIMITER = ","; // Identify the columns in the CSV
         try {
             String line;
-            br.readLine(); // Skips the column names
+            br.readLine(); // Skips the first row, which are the column names
+
+            // Creates a primary key for the row. I decided to not keep auto increment
+            // so I will manually add a primary key for the data by checking the current total + 1,
+            // then incrementing by 1 when inserting into the statement
+            int count = countAllUsers(con) + 1;
 
             // While the line is NOT NULL, read given columns to add to parameters
             while ((line = br.readLine()) != null) {
@@ -24,11 +29,6 @@ public class Create_DB {
                 for (int i = 0; i < temp.length; i++) {
                     temp[i] = temp[i].replaceAll("\"", "");
                 }
-
-                // Creates a primary key for the row. I decided to not keep auto increment
-                // so I will manually add a primary key for the data
-                int count = 0;
-                System.out.println(count);
 
                 /**
                  * ~User Creation~
@@ -56,6 +56,7 @@ public class Create_DB {
                 // Execute SQL statement
                 insertUser.executeUpdate();
             }
+            System.out.println("There are " + countAllUsers(con) + " users in the database");
         } catch (IOException ioe) {
             System.out.println("Oop something went wrong and I have no clue (file input error)");
             ioe.printStackTrace();
@@ -63,7 +64,7 @@ public class Create_DB {
         } catch (SQLException sqlE) {
             System.out.println("Oh no, something wrong with the SQL");
             sqlE.printStackTrace();
-        }
+        } 
     }
 
     // Select Statements in SQL
@@ -79,20 +80,23 @@ public class Create_DB {
 
     }
 
-    public void countAllUsers(Connection con) throws SQLException {
+    //Returns the count of all users in the database
+    public int countAllUsers(Connection con) throws SQLException {
         String viewUsers = "SELECT COUNT(fullname) FROM Users";
         Statement statement = con.createStatement();
         ResultSet result = statement.executeQuery(viewUsers);
 
         result.next();
-        System.out.println("There are " + result.getInt(1) + " users in the database");
+        int count = result.getInt(1);
+        return count;
     }
 
     // Delete Statements in SQL
-    // A method that deletes all users in the database
+    // A method that deletes all users in the database, used to clean up test DB
     public void deleteAllUsers(Connection con) throws SQLException {
         String delete = "DELETE FROM Users" ;
         PreparedStatement statement = con.prepareStatement(delete);
         statement.executeUpdate();
+        System.out.println("All users have been deleted");
     }
 }
