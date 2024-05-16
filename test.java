@@ -17,10 +17,12 @@ public class test {
         FileReader file = new FileReader("us-500.csv");
         BufferedReader br = new BufferedReader(file);
 
-        Connection con = DriverManager.getConnection(dbURL, username, password)
+        Connection con = DriverManager.getConnection(dbURL, username, password);
         Create_DB test = new Create_DB();
         //test.addUsers(con, br);
         //test.viewAllUsers(con);
+        test.countAllUsers(con);
+        test.deleteAllUsers(con);
         test.countAllUsers(con);
 
         //Close buffered reader and connection

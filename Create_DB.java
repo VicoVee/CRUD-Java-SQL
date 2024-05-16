@@ -11,10 +11,6 @@ public class Create_DB {
     public void addUsers(Connection con, BufferedReader br) {
         String COMMA_DELIMITER = ","; // Identify the columns in the CSV
         try {
-            // String resetDatabase = "ALTER TABLE Users AUTO_INCREMENT = 1";
-            // PreparedStatement statement = con.prepareStatement(resetDatabase);
-            // statement.executeUpdate();
-
             String line;
             br.readLine(); // Skips the column names
 
@@ -29,6 +25,11 @@ public class Create_DB {
                     temp[i] = temp[i].replaceAll("\"", "");
                 }
 
+                // Creates a primary key for the row. I decided to not keep auto increment
+                // so I will manually add a primary key for the data
+                int count = 0;
+                System.out.println(count);
+
                 /**
                  * ~User Creation~
                  * Username: Firstname + First Initial
@@ -42,14 +43,15 @@ public class Create_DB {
                 String email = temp[10];
 
                 // Create SQL statement
-                String createUser = "INSERT INTO Users (username, password, fullname, email) VALUES (?, ?, ?, ?)";
+                String createUser = "INSERT INTO Users VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement insertUser = con.prepareStatement(createUser);
 
                 // Create SQL statement
-                insertUser.setString(1, username);
-                insertUser.setString(2, password);
-                insertUser.setString(3, fullname);
-                insertUser.setString(4, email);
+                insertUser.setInt(1, count++);
+                insertUser.setString(2, username);
+                insertUser.setString(3, password);
+                insertUser.setString(4, fullname);
+                insertUser.setString(5, email);
 
                 // Execute SQL statement
                 insertUser.executeUpdate();
@@ -88,4 +90,9 @@ public class Create_DB {
 
     // Delete Statements in SQL
     // A method that deletes all users in the database
+    public void deleteAllUsers(Connection con) throws SQLException {
+        String delete = "DELETE FROM Users" ;
+        PreparedStatement statement = con.prepareStatement(delete);
+        statement.executeUpdate();
+    }
 }
